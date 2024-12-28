@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqp2xn1t11ijb"]
+
+[ext_resource type="Script" path="res://TestScenes/FlyTest/InputConfig.cs" id="1_uuls7"]
+[ext_resource type="PackedScene" uid="uid://cbooh6p3idvke" path="res://Scenes/scene_01.tscn" id="2_w2e1c"]
+[ext_resource type="PackedScene" uid="uid://clsejymf3tp0f" path="res://Elements/PlayerAgent/player_root.tscn" id="3_wklgo"]
+[ext_resource type="Texture2D" uid="uid://dokgtkt3mr1e8" path="res://TestScenes/FlyTest/Textures/sky_linekotsi_03_HDRI.hdr" id="4_v1ibb"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d3vxk"]
+panorama = ExtResource("4_v1ibb")
+
+[sub_resource type="Sky" id="Sky_x6chx"]
+sky_material = SubResource("PanoramaSkyMaterial_d3vxk")
+
+[sub_resource type="Environment" id="Environment_uqusx"]
+background_mode = 2
+sky = SubResource("Sky_x6chx")
+
+[node name="StartInterface" type="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.900319, -0.131601, 0.414858, 0, 0.953191, 0.30237, -0.435231, -0.272229, 0.858176, 0, 0, 0)
+light_energy = 0.1
+shadow_enabled = true
+
+[node name="InputConfig" type="Node" parent="."]
+script = ExtResource("1_uuls7")
+
+[node name="WorldSceneRoot" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldSceneRoot"]
+environment = SubResource("Environment_uqusx")
+
+[node name="PlayerRoot" parent="WorldSceneRoot" instance=ExtResource("3_wklgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Scene01" parent="WorldSceneRoot" instance=ExtResource("2_w2e1c")]

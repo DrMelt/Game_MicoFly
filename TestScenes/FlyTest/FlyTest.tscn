@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbla7ce2emwvt"]
+
+[ext_resource type="Texture2D" uid="uid://dokgtkt3mr1e8" path="res://TestScenes/FlyTest/Textures/sky_linekotsi_03_HDRI.hdr" id="1_1ts10"]
+[ext_resource type="Script" path="res://TestScenes/FlyTest/InputConfig.cs" id="1_nnwgd"]
+[ext_resource type="PackedScene" uid="uid://clsejymf3tp0f" path="res://Elements/PlayerAgent/player_root.tscn" id="3_2jhxo"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_51lq6"]
+panorama = ExtResource("1_1ts10")
+
+[sub_resource type="Sky" id="Sky_ynkta"]
+sky_material = SubResource("PanoramaSkyMaterial_51lq6")
+
+[sub_resource type="Environment" id="Environment_0pk4y"]
+background_mode = 2
+sky = SubResource("Sky_ynkta")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wp3fc"]
+albedo_color = Color(0.38, 0.38, 0.38, 1)
+metallic_specular = 0.3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s2eyb"]
+size = Vector2(100, 100)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_nljue"]
+
+[node name="FlyTest" type="Node3D"]
+
+[node name="InputConfig" type="Node" parent="."]
+script = ExtResource("1_nnwgd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0pk4y")
+
+[node name="PlayerRoot" parent="." instance=ExtResource("3_2jhxo")]
+
+[node name="Env" type="Node3D" parent="."]
+
+[node name="Plane" type="MeshInstance3D" parent="Env"]
+transform = Transform3D(0.997028, 0, 0, 0, 0.997028, 0, 0, 0, 0.997028, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_wp3fc")
+mesh = SubResource("PlaneMesh_s2eyb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Env/Plane"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/Plane/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_nljue")

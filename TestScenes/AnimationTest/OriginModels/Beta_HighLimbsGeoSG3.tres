@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cl6m21vhll1id"]
+
+[resource]
+resource_name = "Beta_HighLimbsGeoSG3"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.550408, 0.62911, 0.752303, 1)
+emission_enabled = true

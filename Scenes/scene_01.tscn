@@ -1,0 +1,2743 @@
+[gd_scene load_steps=54 format=4 uid="uid://cbooh6p3idvke"]
+
+[ext_resource type="Script" path="res://StartInterface/GameSceneInfo.cs" id="1_5sh41"]
+[ext_resource type="PackedScene" uid="uid://cl7i3x6ukvdlv" path="res://Elements/BaseCubes/BaseCube/base_cube.tscn" id="1_6ylia"]
+[ext_resource type="PackedScene" uid="uid://xdg2k046572y" path="res://Elements/BaseCubes/SaveCube/save_cube.tscn" id="1_iwcrx"]
+[ext_resource type="PackedScene" uid="uid://cwrdv5eexg5mx" path="res://Elements/BaseCubes/ArrowsCube/arrows_cube.tscn" id="2_3i3op"]
+[ext_resource type="Script" path="res://Scenes/Scripts/LevelArea3D.cs" id="5_8xdmh"]
+[ext_resource type="Script" path="res://Elements/Components/TriggerArea.cs" id="5_f780o"]
+[ext_resource type="Shader" uid="uid://c8nf1kt1hsgmr" path="res://Elements/WarningLine/mtl_warning_line.tres" id="6_5c8nc"]
+[ext_resource type="Script" path="res://Scenes/Scripts/LevelAreaMesh.cs" id="6_cftpp"]
+[ext_resource type="PackedScene" uid="uid://7qh1aw7tqrj" path="res://Elements/BaseCubes/LevelArea_CollisionShape/level_area_collision_shape.tscn" id="8_q08hl"]
+
+[sub_resource type="Animation" id="Animation_0fj8i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t3641"]
+resource_name = "RestartGame"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../GameSceneInfo")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"CallPlayerRestart"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m3q24"]
+_data = {
+"RESET": SubResource("Animation_0fj8i"),
+"RestartGame": SubResource("Animation_t3641")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q3mac"]
+resource_name = "cube_base"
+albedo_color = Color(0.8, 0.8, 0.8, 1)
+metallic = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3yr0k"]
+resource_name = "cube_color"
+albedo_color = Color(0.800007, 0.130597, 0.780058, 1)
+metallic = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_nxcxp"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_q3mac"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_3yr0k"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vndxn"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_sx81e"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_q3mac"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_3yr0k"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io20y"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cx7eo"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_q3mac"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_3yr0k"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cw145"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_up3uc"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_q3mac"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_3yr0k"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vetus"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vw6b3"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_q3mac"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_3yr0k"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hc1fd"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_iyga5"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_q3mac"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_3yr0k"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l21e8"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hlihd"]
+resource_name = "cube_base"
+albedo_color = Color(0.8, 0.8, 0.8, 1)
+metallic = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw4ab"]
+resource_name = "cube_color"
+albedo_color = Color(0.800007, 0.130597, 0.780058, 1)
+metallic = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_nsyxw"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_hlihd"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_tw4ab"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kdki2"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ahbtf"]
+size = Vector3(8, 5, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3bfxr"]
+size = Vector3(8, 5, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0myt"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_5c8nc")
+shader_parameter/base_color = Color(0.094367, 0.16246, 0.159163, 1)
+shader_parameter/line_color = Color(0.715333, 0.74, 0, 1)
+shader_parameter/Dir = Vector3(1, 0, 1)
+shader_parameter/TimeScale = 0.2
+shader_parameter/Space = 1.0
+shader_parameter/line_step = 0.1
+shader_parameter/line_alpha = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ta760"]
+size = Vector3(8, 8, 13)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xjkul"]
+size = Vector3(8, 8, 13)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_un8kh"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_5c8nc")
+shader_parameter/base_color = Color(0.094367, 0.16246, 0.159163, 1)
+shader_parameter/line_color = Color(0.715333, 0.74, 0, 1)
+shader_parameter/Dir = Vector3(1, 0, 1)
+shader_parameter/TimeScale = 0.2
+shader_parameter/Space = 1.0
+shader_parameter/line_step = 0.1
+shader_parameter/line_alpha = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_obke6"]
+resource_local_to_scene = true
+size = Vector3(11, 7, 11)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqjb2"]
+size = Vector3(11, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l2url"]
+size = Vector3(11, 10, 11)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjycv"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_5c8nc")
+shader_parameter/base_color = Color(0.094367, 0.16246, 0.159163, 1)
+shader_parameter/line_color = Color(0.715333, 0.74, 0, 1)
+shader_parameter/Dir = Vector3(1, 0, 1)
+shader_parameter/TimeScale = 0.2
+shader_parameter/Space = 1.0
+shader_parameter/line_step = 0.1
+shader_parameter/line_alpha = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1ud1"]
+resource_local_to_scene = true
+size = Vector3(10, 20, 11)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ap75y"]
+resource_local_to_scene = true
+size = Vector3(20, 19, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ikanm"]
+resource_local_to_scene = true
+size = Vector3(11, 9, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xcj1a"]
+resource_local_to_scene = true
+size = Vector3(7.16431, 20, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3mhdm"]
+resource_local_to_scene = true
+size = Vector3(13, 20, 11)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l1a2t"]
+resource_local_to_scene = true
+size = Vector3(9, 8, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yahpc"]
+resource_local_to_scene = true
+size = Vector3(6, 20, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t1e5m"]
+resource_local_to_scene = true
+size = Vector3(7, 19, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_udlhb"]
+resource_local_to_scene = true
+size = Vector3(7, 7, 7)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lgh0e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2jveq"]
+size = Vector3(2000, 0.5, 2000)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1ls0l"]
+size = Vector2(2000, 2000)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1olfp"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_5c8nc")
+shader_parameter/base_color = Color(0.02949, 0.042868, 0.030938, 1)
+shader_parameter/line_color = Color(0.209682, 0.233545, 0, 1)
+shader_parameter/Dir = Vector3(1, 0, 1)
+shader_parameter/TimeScale = 0.2
+shader_parameter/Space = 1.0
+shader_parameter/line_step = 0.1
+shader_parameter/line_alpha = 1.0
+
+[node name="Scene01" type="Node3D"]
+
+[node name="GameSceneInfo" type="Node" parent="." node_paths=PackedStringArray("animationPlayerRef")]
+script = ExtResource("1_5sh41")
+animationPlayerRef = NodePath("GameScene_Animation")
+timeOutOfAreaLimit = 1.0
+
+[node name="GameScene_Animation" type="AnimationPlayer" parent="GameSceneInfo"]
+root_node = NodePath("../../Control/ColorRect")
+libraries = {
+"": SubResource("AnimationLibrary_m3q24")
+}
+
+[node name="Control" type="Control" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_right = 1149.0
+offset_bottom = 650.0
+color = Color(0, 0, 0, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="SaveCubes" type="Node3D" parent="."]
+
+[node name="SaveCube_00" parent="SaveCubes" instance=ExtResource("1_iwcrx")]
+mesh = SubResource("ArrayMesh_nxcxp")
+skeleton = NodePath("../..")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_vndxn")
+
+[node name="SaveCube_01" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -12)
+mesh = SubResource("ArrayMesh_sx81e")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_io20y")
+nextFromCubes = [NodePath("../SaveCube_00")]
+
+[node name="SaveCube_02" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -27)
+mesh = SubResource("ArrayMesh_cx7eo")
+skeleton = NodePath("../..")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_cw145")
+nextFromCubes = [NodePath("../SaveCube_01")]
+
+[node name="SaveCube_03" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -27)
+mesh = SubResource("ArrayMesh_up3uc")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_vetus")
+nextFromCubes = [NodePath("../SaveCube_02")]
+
+[node name="SaveCube_04" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -39)
+mesh = SubResource("ArrayMesh_vw6b3")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_hc1fd")
+nextFromCubes = [NodePath("../SaveCube_03")]
+
+[node name="SaveCube_05" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -55)
+mesh = SubResource("ArrayMesh_iyga5")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_l21e8")
+nextFromCubes = [NodePath("../SaveCube_04")]
+
+[node name="SaveCube_06" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -76)
+mesh = SubResource("ArrayMesh_nsyxw")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_kdki2")
+nextFromCubes = [NodePath("../SaveCube_05")]
+
+[node name="BaseCubes" type="Node3D" parent="."]
+
+[node name="BaseCubes_00" type="Node3D" parent="BaseCubes"]
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_00" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-4.37114e-08, 0, 1, 1, -4.37114e-08, 4.37114e-08, 4.37114e-08, 1, 1.91069e-15, 0, -1, -2)
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -2)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube15" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -4)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube16" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -6)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube17" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -8)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -4)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -6)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -8)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -2)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -4)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -6)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -8)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 2)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, 2)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, 2)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, 0)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_00" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, 0)
+skeleton = NodePath("../../..")
+
+[node name="BaseCubes_01" type="Node3D" parent="BaseCubes"]
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_01" instance=ExtResource("2_3i3op")]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, -1, -14)
+skeleton = NodePath("../../..")
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -10)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -10)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -10)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -12)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -12)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -14)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -14)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -14)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -16)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -16)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -16)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -21)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -21)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_01" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -21)
+skeleton = NodePath("../../../SaveCubes")
+
+[node name="BaseCubes_02" type="Node3D" parent="BaseCubes"]
+
+[node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_02"]
+
+[node name="ArrowsCube2" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 2, -1, -27)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -23)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -23)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -23)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -23)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -23)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -25)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -25)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -25)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -25)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -25)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -27)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -27)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -27)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube15" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -27)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube16" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -29)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube17" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -29)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube18" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -29)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube19" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -29)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube20" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -29)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube21" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -31)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube22" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -31)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube23" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -31)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube24" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -31)
+skeleton = NodePath("../../../..")
+
+[node name="BaseCube25" parent="BaseCubes/BaseCubes_02/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -31)
+skeleton = NodePath("../../../..")
+
+[node name="Node3D2" type="Node3D" parent="BaseCubes/BaseCubes_02"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube15" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube16" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube17" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube18" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube19" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube20" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube21" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube22" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube23" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube24" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube25" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube26" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube27" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube28" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube29" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube30" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube31" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube32" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube33" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube34" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube35" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube36" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube37" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube38" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube39" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube40" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube41" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube42" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube43" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube44" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube45" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube46" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube47" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube48" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube49" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube50" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube51" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube52" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube53" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube54" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube55" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube56" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube57" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube58" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube59" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube60" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube61" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube62" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube63" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube64" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube65" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube66" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube67" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube68" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube69" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube70" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube71" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube72" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube73" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube74" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube75" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube76" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube77" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube78" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube79" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube80" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube81" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube82" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube83" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube84" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube85" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube86" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube87" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube88" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube89" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube90" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube91" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube92" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube93" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube94" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube95" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube96" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube97" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube98" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube99" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube100" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube101" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube102" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube103" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube104" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube105" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube106" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube107" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube108" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube109" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube110" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube111" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube112" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube113" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube114" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube115" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube116" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube117" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube118" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube119" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube120" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube121" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube122" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube123" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube124" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube125" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube126" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube127" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube128" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube129" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube130" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube131" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube132" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube133" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube134" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube135" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube136" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube137" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube138" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube139" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube140" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube141" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube142" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube143" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube144" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube145" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube146" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube147" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube148" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube149" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube150" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube151" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube152" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube153" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube154" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube155" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 13, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube156" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 15, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube157" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 17, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube158" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 19, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube159" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 21, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube160" parent="BaseCubes/BaseCubes_02/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 23, -33)
+skeleton = NodePath("../..")
+
+[node name="Node3D3" type="Node3D" parent="BaseCubes/BaseCubes_02"]
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-1, 0, -8.74228e-08, -7.64274e-15, -1, 8.74228e-08, -8.74228e-08, 8.74228e-08, 1, 15, 3, -27)
+
+[node name="ArrowsCube2" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-1, 0, -8.74228e-08, -7.64274e-15, -1, 8.74228e-08, -8.74228e-08, 8.74228e-08, 1, 15, 5, -27)
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube15" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube16" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube17" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube18" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube19" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube20" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube21" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube22" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube23" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube24" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube25" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube26" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube27" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube28" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube29" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube30" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube31" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube32" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube33" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube34" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube35" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube36" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube37" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube38" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube39" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube40" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -1, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube41" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube42" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube43" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube44" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube45" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 1, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube46" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube47" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube48" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube49" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube50" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 3, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube51" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube52" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube53" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube54" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube55" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 5, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube56" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube57" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube58" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube59" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube60" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 7, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube61" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube62" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube63" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube64" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube65" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 9, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube66" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube67" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube68" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube69" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube70" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 11, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCube71" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -23)
+skeleton = NodePath("../..")
+
+[node name="BaseCube72" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -21)
+skeleton = NodePath("../..")
+
+[node name="BaseCube73" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -19)
+skeleton = NodePath("../..")
+
+[node name="BaseCube74" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -17)
+skeleton = NodePath("../..")
+
+[node name="BaseCube75" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -15)
+skeleton = NodePath("../..")
+
+[node name="BaseCube76" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -33)
+skeleton = NodePath("../..")
+
+[node name="BaseCube77" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -31)
+skeleton = NodePath("../..")
+
+[node name="BaseCube78" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -29)
+skeleton = NodePath("../..")
+
+[node name="BaseCube79" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -27)
+skeleton = NodePath("../..")
+
+[node name="BaseCube80" parent="BaseCubes/BaseCubes_02/Node3D3" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, -3, -25)
+skeleton = NodePath("../..")
+
+[node name="BaseCubes_03" type="Node3D" parent="BaseCubes"]
+
+[node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_03"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -29)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -29)
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -29)
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -25)
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -25)
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -27)
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -25)
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -27)
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 11, -29)
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 11, -27)
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 11, -25)
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_03/Node3D" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-4.37114e-08, 0, 1, 1, -4.37114e-08, 4.37114e-08, 4.37114e-08, 1, 1.91069e-15, 21, 11, -29)
+
+[node name="Node3D2" type="Node3D" parent="BaseCubes/BaseCubes_03"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube15" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube16" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube17" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube18" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube19" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube20" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube21" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube22" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube23" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube24" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube25" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube26" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube27" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube28" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube29" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube30" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube31" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube32" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube33" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube34" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube35" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube36" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube37" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube38" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube39" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube40" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube41" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube42" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube43" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube44" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube45" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube46" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube47" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube48" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube49" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube50" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube51" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube52" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube53" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube54" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube55" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube56" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube57" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube58" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube59" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube60" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube61" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube62" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube63" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube64" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube65" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube66" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube67" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube68" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube69" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube70" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube71" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube72" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube73" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube74" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube75" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube76" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube77" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube78" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube79" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube80" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube81" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube82" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube83" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube84" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube85" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube86" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube87" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube88" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube89" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube90" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube91" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube92" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube93" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube94" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube95" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube96" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube97" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube98" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube99" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube100" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube101" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube102" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube103" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube104" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube105" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube106" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube107" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube108" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube109" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube110" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube111" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube112" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube113" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube114" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube115" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube116" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube117" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube118" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube119" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube120" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube121" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube122" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube123" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube124" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube125" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube126" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube127" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube128" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube129" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube130" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube131" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube132" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube133" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube134" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube135" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube136" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube137" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube138" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube139" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube140" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube141" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube142" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube143" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube144" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube145" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube146" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube147" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube148" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube149" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube150" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube151" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube152" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube153" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube154" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube155" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 13, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube156" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 15, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube157" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 17, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube158" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 19, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube159" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 21, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube160" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 23, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube161" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube162" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube163" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube164" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube165" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 7, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube166" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 9, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube167" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 11, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="BaseCube168" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -3, -50)
+skeleton = NodePath("../../../BaseCubes_02")
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("2_3i3op")]
+transform = Transform3D(1.49011e-08, 0.866025, -0.5, -2.58095e-08, 0.5, 0.866025, 1, 0, 2.98023e-08, 21, 13, -50)
+
+[node name="ArrowsCube2" parent="BaseCubes/BaseCubes_03/Node3D2" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-1.3027e-15, 1, 4.37114e-08, -2.98023e-08, -4.37114e-08, 1, 1, 0, 2.98023e-08, 21, 5, -50)
+
+[node name="BaseCubes_04" type="Node3D" parent="BaseCubes"]
+
+[node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_04"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -37)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -37)
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -41)
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -39)
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -37)
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -39)
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -41)
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -41)
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -35)
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -35)
+
+[node name="BaseCube11" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -35)
+
+[node name="BaseCube12" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -43)
+
+[node name="BaseCube13" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -43)
+
+[node name="BaseCube14" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1, -43)
+
+[node name="BaseCube15" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -37)
+
+[node name="BaseCube16" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -39)
+
+[node name="BaseCube17" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -41)
+
+[node name="BaseCube18" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -35)
+
+[node name="BaseCube19" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -1, -43)
+
+[node name="BaseCube20" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -37)
+
+[node name="BaseCube21" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -39)
+
+[node name="BaseCube22" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -41)
+
+[node name="BaseCube23" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -35)
+
+[node name="BaseCube24" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1, -43)
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_04/Node3D" instance=ExtResource("2_3i3op")]
+transform = Transform3D(4.37114e-08, 4.37114e-08, 1, 1, 1.91069e-15, -4.37114e-08, -3.82137e-15, 1, -4.37114e-08, 0, -1, -41)
+
+[node name="Node3D2" type="Node3D" parent="BaseCubes/BaseCubes_04"]
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_04/Node3D2" instance=ExtResource("2_3i3op")]
+transform = Transform3D(2.18557e-08, -0.866025, 0.5, -3.78552e-08, -0.5, -0.866025, 1, 0, -4.37114e-08, -1, 0, -62)
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_04/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(12, 0, 0, 0, 14, 0, 0, 0, 1, 4, 10, -62)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_04/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 5, 15, 1, -56)
+
+[node name="BaseCubes_05" type="Node3D" parent="BaseCubes"]
+
+[node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_05"]
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -55)
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -53)
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -57)
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -53)
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -57)
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -55)
+
+[node name="BaseCube9" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -53)
+
+[node name="BaseCube10" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -57)
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_05/Node3D" instance=ExtResource("2_3i3op")]
+transform = Transform3D(0, 0, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, 0, 21, 11, -57)
+
+[node name="Node3D2" type="Node3D" parent="BaseCubes/BaseCubes_05"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_05/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(5, 0, 0, 0, 8, 0, 0, 0, 1, 21, 16, -66)
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_05/Node3D2" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 21, 13, -66)
+
+[node name="ArrowsCube2" parent="BaseCubes/BaseCubes_05/Node3D2" instance=ExtResource("2_3i3op")]
+transform = Transform3D(4.37114e-08, -8.74228e-08, 1, -3.82137e-15, -1, -8.74228e-08, 1, 0, -4.37114e-08, 21, 3, -74)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_05/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(7, 0, 0, 0, 5, 0, 0, 0, 1, 21, 4, -74)
+
+[node name="BaseCubes_06" type="Node3D" parent="BaseCubes"]
+
+[node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_06"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -76)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -74)
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -78)
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -74)
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -78)
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -76)
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -74)
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -78)
+
+[node name="Areas" type="Node3D" parent="."]
+
+[node name="Level00_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/Level00_Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11264, 1.82446, -2.46754)
+shape = SubResource("BoxShape3D_ahbtf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Areas/Level00_Area3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_3bfxr")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_e0myt")
+script = ExtResource("6_cftpp")
+
+[node name="Level01_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/Level01_Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -15)
+shape = SubResource("BoxShape3D_ta760")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Areas/Level01_Area3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_xjkul")
+surface_material_override/0 = SubResource("ShaderMaterial_un8kh")
+script = ExtResource("6_cftpp")
+
+[node name="Level02_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="LevelArea_CollisionShape2" parent="Areas/Level02_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 15, -29)
+shape = SubResource("BoxShape3D_obke6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/Level02_Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -27)
+shape = SubResource("BoxShape3D_rqjb2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Areas/Level02_Area3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_l2url")
+surface_material_override/0 = SubResource("ShaderMaterial_jjycv")
+script = ExtResource("6_cftpp")
+
+[node name="LevelArea_CollisionShape" parent="Areas/Level02_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 10, -27)
+shape = SubResource("BoxShape3D_j1ud1")
+
+[node name="Level03_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="LevelArea_CollisionShape" parent="Areas/Level03_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9, -41.5)
+shape = SubResource("BoxShape3D_ap75y")
+
+[node name="Level04_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="LevelArea_CollisionShape" parent="Areas/Level04_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -41.5)
+shape = SubResource("BoxShape3D_ikanm")
+
+[node name="LevelArea_CollisionShape2" parent="Areas/Level04_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.981812, 9.5, -55.5)
+shape = SubResource("BoxShape3D_xcj1a")
+
+[node name="LevelArea_CollisionShape3" parent="Areas/Level04_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9.5, -56)
+shape = SubResource("BoxShape3D_3mhdm")
+
+[node name="Level05_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="LevelArea_CollisionShape4" parent="Areas/Level05_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 15.5, -55)
+shape = SubResource("BoxShape3D_l1a2t")
+
+[node name="LevelArea_CollisionShape" parent="Areas/Level05_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.5, -62)
+shape = SubResource("BoxShape3D_yahpc")
+
+[node name="LevelArea_CollisionShape2" parent="Areas/Level05_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 9, -69)
+shape = SubResource("BoxShape3D_t1e5m")
+
+[node name="Level06_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="LevelArea_CollisionShape" parent="Areas/Level06_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 15, -76)
+shape = SubResource("BoxShape3D_udlhb")
+
+[node name="BelowHorizon_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_f780o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Areas/BelowHorizon_Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("WorldBoundaryShape3D_lgh0e")
+
+[node name="LimitShape" type="Node3D" parent="."]
+
+[node name="LimitPlane" type="Node3D" parent="LimitShape"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LimitShape/LimitPlane"]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LimitShape/LimitPlane/StaticBody3D"]
+shape = SubResource("BoxShape3D_2jveq")
+
+[node name="LimitPlane_Mesh" type="MeshInstance3D" parent="LimitShape/LimitPlane/StaticBody3D/CollisionShape3D"]
+mesh = SubResource("PlaneMesh_1ls0l")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_1olfp")

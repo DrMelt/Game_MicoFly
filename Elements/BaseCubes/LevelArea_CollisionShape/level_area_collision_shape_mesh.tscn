@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8qgbvla1teyl"]
+
+[ext_resource type="Shader" uid="uid://c8nf1kt1hsgmr" path="res://Elements/WarningLine/mtl_warning_line.tres" id="1_u0kvq"]
+[ext_resource type="Script" path="res://Scenes/Scripts/LevelAreaMesh.cs" id="2_buoxu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1ydgm"]
+resource_local_to_scene = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ujad6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_u0kvq")
+shader_parameter/base_color = Color(0.094367, 0.16246, 0.159163, 1)
+shader_parameter/line_color = Color(0.715333, 0.74, 0, 1)
+shader_parameter/Dir = Vector3(1, 0, 1)
+shader_parameter/TimeScale = 0.2
+shader_parameter/Space = 1.0
+shader_parameter/line_step = 0.1
+shader_parameter/line_alpha = 0.0
+
+[node name="LevelArea_CollisionShape_Mesh" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_1ydgm")
+surface_material_override/0 = SubResource("ShaderMaterial_ujad6")
+script = ExtResource("2_buoxu")

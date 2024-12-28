@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwrdv5eexg5mx"]
+
+[ext_resource type="PackedScene" uid="uid://cl7i3x6ukvdlv" path="res://Elements/BaseCubes/BaseCube/base_cube.tscn" id="1_g3xma"]
+[ext_resource type="Shader" uid="uid://boo7atrto48fn" path="res://Elements/BaseCubes/Materals/mtl_arrows_cube.tres" id="2_7lvad"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xl54p"]
+render_priority = 0
+shader = ExtResource("2_7lvad")
+
+[node name="ArrowsCube" instance=ExtResource("1_g3xma")]
+surface_material_override/0 = SubResource("ShaderMaterial_xl54p")

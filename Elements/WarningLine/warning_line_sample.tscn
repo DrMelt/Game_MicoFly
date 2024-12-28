@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bg5kvn0ef1eo6"]
+
+[ext_resource type="Shader" uid="uid://c8nf1kt1hsgmr" path="res://Elements/WarningLine/mtl_warning_line.tres" id="1_33yxm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_64bsx"]
+size = Vector2(20, 20)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rckup"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_33yxm")
+shader_parameter/base_color = Color(0.02949, 0.042868, 0.030938, 1)
+shader_parameter/line_color = Color(0.209682, 0.233545, 0, 1)
+shader_parameter/Dir = Vector3(1, 0, 1)
+shader_parameter/TimeScale = 0.2
+shader_parameter/Space = 1.0
+shader_parameter/line_step = 0.1
+shader_parameter/line_alpha = 0.0
+
+[node name="WarningLineSample" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_64bsx")
+surface_material_override/0 = SubResource("ShaderMaterial_rckup")

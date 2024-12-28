@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://clsejymf3tp0f"]
+
+[ext_resource type="Script" path="res://Elements/PlayerAgent/PlayerRoot.cs" id="1_u5gls"]
+[ext_resource type="Script" path="res://TestScenes/FlyTest/Camera3d.cs" id="2_ddp44"]
+[ext_resource type="Script" path="res://TestScenes/FlyTest/MeshInstance3dHorizontalLine.cs" id="3_xvshs"]
+[ext_resource type="Script" path="res://TestScenes/FlyTest/Character_Controller.cs" id="4_g3fby"]
+[ext_resource type="ArrayMesh" uid="uid://cq2641pqsnjcj" path="res://TestScenes/FlyTest/Models/body_center_box.obj" id="5_mt5f8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8miln"]
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.707967, 0.707967, 0.707967, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_0afp2"]
+size = Vector2(0.1, 0.001)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aiyb0"]
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.907942, 0.907942, 0.907942, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_npd08"]
+albedo_color = Color(0.495, 0.66, 0.66, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kob7t"]
+size = Vector3(0.6, 1, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwml3"]
+size = Vector3(0.6, 1, 0.6)
+
+[node name="PlayerRoot" type="Node3D" node_paths=PackedStringArray("body3D")]
+script = ExtResource("1_u5gls")
+body3D = NodePath("Character_Controller")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("body3D")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+current = true
+script = ExtResource("2_ddp44")
+body3D = NodePath("../Character_Controller")
+
+[node name="MeshInstance3D_HorizontalLine" type="MeshInstance3D" parent="Camera3D" node_paths=PackedStringArray("camera3D")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+material_override = SubResource("StandardMaterial3D_8miln")
+mesh = SubResource("QuadMesh_0afp2")
+script = ExtResource("3_xvshs")
+camera3D = NodePath("..")
+
+[node name="CenterPoint" type="Node" parent="Camera3D"]
+
+[node name="ColorRect" type="ColorRect" parent="Camera3D/CenterPoint"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0430392, 0.0430392, 0.0430392, 1)
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Camera3D"]
+
+[node name="Character_Controller" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera3D")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("4_g3fby")
+camera3D = NodePath("../Camera3D")
+
+[node name="MeshInstance3D_BodyCenterBox" type="MeshInstance3D" parent="Character_Controller"]
+transform = Transform3D(-0.0359292, 1.20843e-07, -1.37299e-16, 0, -6.04213e-08, -0.0359292, -3.14103e-09, -1.38228, 1.57052e-09, -3.0598e-08, 0.84163, 0.35)
+material_override = SubResource("StandardMaterial3D_aiyb0")
+mesh = ExtResource("5_mt5f8")
+skeleton = NodePath("../../Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Character_Controller"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_npd08")
+mesh = SubResource("BoxMesh_kob7t")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character_Controller"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_xwml3")

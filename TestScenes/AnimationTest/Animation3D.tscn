@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfbi8ib0ef2q1"]
+
+[ext_resource type="PackedScene" uid="uid://d1powh6i7ueua" path="res://TestScenes/AnimationTest/OriginModels/Shoved Reaction With Spin.fbx" id="1_qlob0"]
+[ext_resource type="Script" path="res://TestScenes/AnimationTest/AnimationPlayer_control.cs" id="2_5lrlt"]
+
+[sub_resource type="Animation" id="Animation_vkoqo"]
+resource_name = "new_animation_loop"
+length = 2.0
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 2, 1, -0.89605, 0, 1.49655)
+tracks/1/type = "scale_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 1, 1, 1, 2, 1, 0.74, 0.74, 0.74)
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D:rotation:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.64661, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D:rotation:z")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7eu7k"]
+_data = {
+"new_animation_loop": SubResource("Animation_vkoqo")
+}
+
+[sub_resource type="BoxMesh" id="BoxMesh_qfkxd"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Shoved Reaction With Spin" parent="." instance=ExtResource("1_qlob0")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7eu7k")
+}
+autoplay = "new_animation_loop"
+script = ExtResource("2_5lrlt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.865925, 0, 0.22449, 0, 0.894551, 0, -0.22449, 0, 0.865925, -0.363414, 0, 0.60696)
+mesh = SubResource("BoxMesh_qfkxd")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.866915, -0.405284, 0.290177, 0, 0.582153, 0.813079, -0.498456, -0.704871, 0.504678, 0.732434, 1.80949, 1.70378)
+fov = 100.98

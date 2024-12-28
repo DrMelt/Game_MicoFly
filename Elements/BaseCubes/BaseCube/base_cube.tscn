@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl7i3x6ukvdlv"]
+
+[ext_resource type="ArrayMesh" uid="uid://svex3n78vj7p" path="res://Elements/BaseCubes/Meshes/base_cube.obj" id="1_fwf5c"]
+[ext_resource type="Material" uid="uid://dtpnw0w23lqle" path="res://Elements/BaseCubes/Materals/mtl_cube_base.tres" id="2_d3ytr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_llsgg"]
+size = Vector3(2, 2, 2)
+
+[node name="BaseCube" type="MeshInstance3D"]
+mesh = ExtResource("1_fwf5c")
+surface_material_override/0 = ExtResource("2_d3ytr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_llsgg")
