@@ -40,7 +40,10 @@ public partial class Camera3d : Camera3D
 	{
 		if (@event is InputEventMouseMotion eventMouse)
 		{
-			mouseMoved += eventMouse.Relative * GetWindow().Size.Y / 648.0f;
+			if (InputConfig.InstanceRef.IsMouseCaptured)
+			{
+				mouseMoved += eventMouse.Relative * GetWindow().Size.Y / 648.0f;
+			}
 		}
 	}
 

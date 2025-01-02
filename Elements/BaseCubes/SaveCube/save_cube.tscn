@@ -4,12 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://cjn4x3i6wmj0q" path="res://Elements/BaseCubes/SaveCube/SaveTarget/save_target.tscn" id="4_nhf1i"]
 [ext_resource type="Script" path="res://Elements/BaseCubes/SaveCube/SaveCubeArea3d.cs" id="5_e03j6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hlihd"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xx0te"]
 resource_name = "cube_base"
 albedo_color = Color(0.8, 0.8, 0.8, 1)
 metallic = 0.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw4ab"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fs766"]
 resource_name = "cube_color"
 albedo_color = Color(0.800007, 0.130597, 0.780058, 1)
 metallic = 0.5
@@ -22,7 +22,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 132,
 "index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
-"material": SubResource("StandardMaterial3D_hlihd"),
+"material": SubResource("StandardMaterial3D_xx0te"),
 "name": "cube_base",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -34,7 +34,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 24,
 "index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
-"material": SubResource("StandardMaterial3D_tw4ab"),
+"material": SubResource("StandardMaterial3D_fs766"),
 "name": "cube_color",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),

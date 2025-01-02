@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://cbooh6p3idvke"]
+[gd_scene load_steps=60 format=4 uid="uid://cbooh6p3idvke"]
 
 [ext_resource type="Script" path="res://StartInterface/GameSceneInfo.cs" id="1_5sh41"]
 [ext_resource type="PackedScene" uid="uid://cl7i3x6ukvdlv" path="res://Elements/BaseCubes/BaseCube/base_cube.tscn" id="1_6ylia"]
@@ -99,7 +99,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vndxn"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_go78h"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -136,7 +136,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io20y"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pvfrr"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -173,7 +173,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cw145"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vx0ae"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -210,7 +210,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vetus"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dtq4u"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -247,7 +247,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hc1fd"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4gno5"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -284,7 +284,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l21e8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k7hek"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -331,7 +331,54 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kdki2"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88yhu"]
+resource_local_to_scene = true
+specular_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.497474, 0.497474, 0.497474, 1)
+disable_receive_shadows = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xx0te"]
+resource_name = "cube_base"
+albedo_color = Color(0.8, 0.8, 0.8, 1)
+metallic = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fs766"]
+resource_name = "cube_color"
+albedo_color = Color(0.800007, 0.130597, 0.780058, 1)
+metallic = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gf483"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("AAAgPwAAgD8AAMA+AACAPwAAID8AAEA/AADAPgAAQD8AACA/AABAPwAAwD4AAEA/AAAgPwAAAD8AAMA+AAAAPwAAID8AAAA/AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAADAPgAAAAAAAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAAA+AACAPgMGVT8HDOo+/fkqPwcM6j4DBlU/+fOVPv35Kj/585U+IJZZP0Es8z4gllk/v9OMPgAAYD8AAAA/AABgPwAAgD7gaSY/QSzzPgAAID8AAAA/4GkmP7/TjD4AACA/AACAPpn1Vj/PFJI+ZwopP88Ukj6Z9VY/zxSSPmcKKT/PFJI+4GkmP0Es8z7gaSY/v9OMPuBpJj9BLPM+4GkmP7/TjD6Z9VY/MevtPpn1Vj/PFJI+mfVWPzHr7T6Z9VY/zxSSPmcKKT/PFJI+ZwopPzHr7T5nCik/zxSSPmcKKT8x6+0+mfVWPzHr7T6Z9VY/zxSSPmcKKT8x6+0+ZwopP88Ukj4gllk/v9OMPiCWWT9BLPM+IJZZP7/TjD4gllk/QSzzPmcKKT8x6+0+mfVWPzHr7T5nCik/MevtPpn1Vj8x6+0+4GkmP7/TjD4gllk/v9OMPuBpJj+/04w+IJZZP7/TjD4gllk/QSzzPuBpJj9BLPM+IJZZP0Es8z7gaSY/QSzzPg=="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAYAB0AHQAYABoAHgAcAB8AHwAcAB0AGQAeABsAGwAeAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8AFAAWADAAMAAWADEAFQAUADIAMgAUADAAFwAVADMAMwAVADIAFgAXADEAMQAXADMANAA1ADYANgA1ADcAOAA5ADoAOgA5ADsAPAA9AD4APgA9AD8AQABBAEIAQgBBAEMA"),
+"material": SubResource("StandardMaterial3D_xx0te"),
+"name": "cube_base",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 68,
+"vertex_data": PackedByteArray("AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAvwAAgD8AAIC/AACAvwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIC/AACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAPwAAgD8AAIA/AACAPwAAgL8AAIA/AACAvwAAgD8AAIA/AACAvwAAgL8AAIA/AACAPwAAgL8AAIC/AACAvwAAgL8AAIC/AACAPwAAgL8AAIA/AACAvwAAgL8AAIA/KzAovwAAgD8rMCi/KzAoPwAAgD8rMCi/KzAovwAAgD8rMCg/KzAoPwAAgD8rMCg/4rBMvwAAgD/isEy/4rBMvwAAgD/isEw/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/4rBMPwAAgD/isEy/AACAPwAAgD8AAIC/4rBMPwAAgD/isEw/AACAPwAAgD8AAIA/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDc/1qw3v6Yoaz/WrDc/1qw3P6Yoaz/WrDc/4rBMPwAAgD/isEy/4rBMPwAAgD/isEw/4rBMP6Yoaz/isEy/4rBMP6Yoaz/isEw/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3v6Yoaz/WrDe/1qw3v6Yoaz/WrDc/1qw3PwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3P6Yoaz/WrDc/1qw3P6Yoaz/WrDe/1qw3vwAAgD/WrDe/1qw3vwAAgD/WrDc/1qw3PwAAgD/WrDe/1qw3PwAAgD/WrDc/4rBMvwAAgD/isEw/4rBMvwAAgD/isEy/4rBMv6Yoaz/isEw/4rBMv6Yoaz/isEy/1qw3PwAAgD/WrDe/1qw3vwAAgD/WrDe/1qw3P6Yoaz/WrDe/1qw3v6Yoaz/WrDe/4rBMPwAAgD/isEw/4rBMvwAAgD/isEw/4rBMP6Yoaz/isEw/4rBMv6Yoaz/isEw/4rBMvwAAgD/isEy/4rBMPwAAgD/isEy/4rBMv6Yoaz/isEy/4rBMP6Yoaz/isEy/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9//3////8//3//f////z//f/9/////P/9//3////8/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////78AAP9/////v////3////+/////f////7////9/////v////3////+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7////9/////v////3////+/////f////7////9/////v/////////+//////////7//////////v/////////+//////////7//////////v/////////+//////////7//f/9/////P/9//3////8//3//f////z//f/9/////Pw==")
+}, {
+"aabb": AABB(-0.799574, 0.918589, -0.799574, 1.59915, 1e-05, 1.59915),
+"attribute_data": PackedByteArray("9Nb1dvTWCkmV2ZV5ldlpRgmp9XZpppV5CakKSWmmaUY="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAAAAUABQAAAAIABgAEAAcABwAEAAUAAQAGAAMAAwAGAAcA"),
+"material": SubResource("StandardMaterial3D_fs766"),
+"name": "cube_color",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("JA0AACQN//8kDQAA2vL//wAAAAAAAP//AAAAAP/////a8gAAJA3/////AAAAAP//2vIAANry/////wAA//////9//7//vwAA/3//v/+/AAD/vwAA/78AAP9//7//f/+/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1pk6"]
 resource_local_to_scene = true
 specular_mode = 2
 albedo_color = Color(0, 0, 0, 1)
@@ -433,6 +480,14 @@ size = Vector3(7, 19, 7)
 resource_local_to_scene = true
 size = Vector3(7, 7, 7)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ha43k"]
+resource_local_to_scene = true
+size = Vector3(9, 9, 36)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8my3x"]
+resource_local_to_scene = true
+size = Vector3(7, 9, 7)
+
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lgh0e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2jveq"]
@@ -489,13 +544,13 @@ metadata/_edit_use_anchors_ = true
 mesh = SubResource("ArrayMesh_nxcxp")
 skeleton = NodePath("../..")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_vndxn")
+surface_material_override/1 = SubResource("StandardMaterial3D_go78h")
 
 [node name="SaveCube_01" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -12)
 mesh = SubResource("ArrayMesh_sx81e")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_io20y")
+surface_material_override/1 = SubResource("StandardMaterial3D_pvfrr")
 nextFromCubes = [NodePath("../SaveCube_00")]
 
 [node name="SaveCube_02" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
@@ -503,36 +558,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -27)
 mesh = SubResource("ArrayMesh_cx7eo")
 skeleton = NodePath("../..")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_cw145")
+surface_material_override/1 = SubResource("StandardMaterial3D_vx0ae")
 nextFromCubes = [NodePath("../SaveCube_01")]
 
 [node name="SaveCube_03" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -27)
 mesh = SubResource("ArrayMesh_up3uc")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_vetus")
+surface_material_override/1 = SubResource("StandardMaterial3D_dtq4u")
 nextFromCubes = [NodePath("../SaveCube_02")]
 
 [node name="SaveCube_04" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -39)
 mesh = SubResource("ArrayMesh_vw6b3")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_hc1fd")
+surface_material_override/1 = SubResource("StandardMaterial3D_4gno5")
 nextFromCubes = [NodePath("../SaveCube_03")]
 
 [node name="SaveCube_05" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -55)
 mesh = SubResource("ArrayMesh_iyga5")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_l21e8")
+surface_material_override/1 = SubResource("StandardMaterial3D_k7hek")
 nextFromCubes = [NodePath("../SaveCube_04")]
 
 [node name="SaveCube_06" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -76)
 mesh = SubResource("ArrayMesh_nsyxw")
 surface_material_override/0 = null
-surface_material_override/1 = SubResource("StandardMaterial3D_kdki2")
+surface_material_override/1 = SubResource("StandardMaterial3D_88yhu")
 nextFromCubes = [NodePath("../SaveCube_05")]
+
+[node name="SaveCube_07" parent="SaveCubes" node_paths=PackedStringArray("nextFromCubes") instance=ExtResource("1_iwcrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -119)
+mesh = SubResource("ArrayMesh_gf483")
+surface_material_override/0 = null
+surface_material_override/1 = SubResource("StandardMaterial3D_l1pk6")
+nextFromCubes = [NodePath("../SaveCube_06")]
 
 [node name="BaseCubes" type="Node3D" parent="."]
 
@@ -2555,6 +2617,9 @@ transform = Transform3D(12, 0, 0, 0, 14, 0, 0, 0, 1, 4, 10, -62)
 [node name="BaseCube2" parent="BaseCubes/BaseCubes_04/Node3D2" instance=ExtResource("1_6ylia")]
 transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 5, 15, 1, -56)
 
+[node name="ArrowsCube2" parent="BaseCubes/BaseCubes_04/Node3D2" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-8.88178e-15, -1, 2.08616e-07, -4.37114e-08, -2.08616e-07, -1, 1, 0, -4.37114e-08, -1, 12, -62)
+
 [node name="BaseCubes_05" type="Node3D" parent="BaseCubes"]
 
 [node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_05"]
@@ -2627,6 +2692,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -74)
 
 [node name="BaseCube8" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("1_6ylia")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -78)
+
+[node name="ArrowsCube" parent="BaseCubes/BaseCubes_06/Node3D" instance=ExtResource("2_3i3op")]
+transform = Transform3D(-4.37114e-08, 0, 1, 1, -4.37114e-08, 4.37114e-08, 4.37114e-08, 1, 1.91069e-15, 21, 11, -78)
+
+[node name="Node3D2" type="Node3D" parent="BaseCubes/BaseCubes_06"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_06/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(4, 0, 0, 0, 7, 0, 0, 0, 1, 17, 16, -88)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_06/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(4, 0, 0, 0, 7, 0, 0, 0, 1, 25, 16, -97)
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_06/Node3D2" instance=ExtResource("1_6ylia")]
+transform = Transform3D(4, 0, 0, 0, 7, 0, 0, 0, 1, 17, 16, -106)
+
+[node name="BaseCubes_07" type="Node3D" parent="BaseCubes"]
+
+[node name="Node3D" type="Node3D" parent="BaseCubes/BaseCubes_07"]
+
+[node name="BaseCube" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -117)
+
+[node name="BaseCube2" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -117)
+
+[node name="BaseCube3" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -117)
+
+[node name="BaseCube4" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -119)
+
+[node name="BaseCube5" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -119)
+
+[node name="BaseCube6" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 11, -121)
+
+[node name="BaseCube7" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 11, -121)
+
+[node name="BaseCube8" parent="BaseCubes/BaseCubes_07/Node3D" instance=ExtResource("1_6ylia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 11, -121)
 
 [node name="Areas" type="Node3D" parent="."]
 
@@ -2718,6 +2825,17 @@ script = ExtResource("5_8xdmh")
 [node name="LevelArea_CollisionShape" parent="Areas/Level06_Area3D" instance=ExtResource("8_q08hl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 15, -76)
 shape = SubResource("BoxShape3D_udlhb")
+
+[node name="LevelArea_CollisionShape2" parent="Areas/Level06_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 16, -97.5)
+shape = SubResource("BoxShape3D_ha43k")
+
+[node name="Level07_Area3D" type="Area3D" parent="Areas"]
+script = ExtResource("5_8xdmh")
+
+[node name="LevelArea_CollisionShape" parent="Areas/Level07_Area3D" instance=ExtResource("8_q08hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 16, -119)
+shape = SubResource("BoxShape3D_8my3x")
 
 [node name="BelowHorizon_Area3D" type="Area3D" parent="Areas"]
 script = ExtResource("5_f780o")
